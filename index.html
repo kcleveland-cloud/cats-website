@@ -85,6 +85,46 @@ nav a:hover{color:var(--ink)}
 main{position:relative;z-index:0}
 .life{margin-top:40px}
 
+
+/* ---- Flash pass ---- */
+.hero h1 em{background:linear-gradient(90deg,#a6d65a,#5fe0c8,#8cbeff,#a6d65a);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 8s linear infinite}
+@keyframes sheen{to{background-position:300% 0}}
+@keyframes rise{from{transform:translateY(18px);opacity:.3}to{transform:none;opacity:1}}
+.hero-grid>div:first-child>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+.hero-grid>div:first-child>*:nth-child(2){animation-delay:.08s}
+.hero-grid>div:first-child>*:nth-child(3){animation-delay:.16s}
+.hero-grid>div:first-child>*:nth-child(4){animation-delay:.24s}
+.hero-grid>div:first-child>*:nth-child(5){animation-delay:.32s}
+.emblem{animation:rise 1s .15s cubic-bezier(.2,.7,.2,1) both}
+.emblem img{animation:float 7s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.btn.primary{box-shadow:0 0 0 0 rgba(166,214,90,.5);animation:pulse 2.8s 1.2s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(166,214,90,.45)}70%,100%{box-shadow:0 0 0 14px rgba(166,214,90,0)}}
+.cap{position:relative;transition:transform .2s,box-shadow .2s}
+.cap::after{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--leaf));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.cap:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(18,58,107,.16);z-index:1}
+.cap:hover::after{transform:scaleX(1)}
+section.block{position:relative}
+section.block::before{content:"";position:absolute;top:-1px;left:50%;width:min(420px,60%);height:2px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,var(--accent),var(--leaf),transparent);opacity:.7}
+/* dark UAS band */
+.dark-band{background:radial-gradient(90% 120% at 15% 30%,#123a6b 0%,#0a1f3f 45%,#061328 100%);color:#e7eef8;border-top:0}
+.dark-band::before{display:none}
+.dark-band .eyebrow{color:#a6d65a}
+.dark-band .sec-head h2{color:#fff}
+.dark-band .sec-head p{color:#b9c8dc}
+.dark-band .pp{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.14)}
+.dark-band .pp-main h3{color:#fff}
+.dark-band .pp-main .sub{color:#a6d65a}
+.dark-band .pp-main p{color:#c9d6e6}
+.dark-band .plate{background:rgba(166,214,90,.08);color:#e9f2dc;border-left:1px solid rgba(166,214,90,.35)}
+.pp.uas-pp{grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr) minmax(0,1fr)}
+.drone-cell{display:grid;place-items:center;padding:28px;border-right:1px solid rgba(255,255,255,.1)}
+@media (max-width:980px){.pp.uas-pp{grid-template-columns:1fr}.drone-cell{border-right:0;border-bottom:1px solid rgba(255,255,255,.1)}}
+.drone{display:block;width:100%;max-width:280px;overflow:visible}
+.drone .prop{transform-box:fill-box;transform-origin:center;animation:spin .35s linear infinite}
+.drone .prop.ccw{animation-direction:reverse}
+@media (prefers-reduced-motion:reduce){.hero h1 em,.hero-grid>div:first-child>*,.emblem,.emblem img,.btn.primary,.drone .prop{animation:none}.cap,.cap::after{transition:none}}
+
 /* Lifecycle strip */
 .life{padding-block:8px 64px}
 .life-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:14px}
@@ -129,7 +169,7 @@ section.block{padding-block:clamp(56px,8vw,96px);border-top:1px solid var(--rule
 /* Past performance */
 .pp{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);background:var(--surface);border:1px solid var(--rule)}
 .pp-main{padding:clamp(24px,4vw,40px);min-width:0}
-.pp-main h3{font-size:clamp(1.6rem,3vw,2.1rem);font-weight:800;font-stretch:85%}
+.pp-main h3{font-size:clamp(1.6rem,3vw,2.1rem);line-height:1.1;font-weight:800;font-stretch:85%}
 .pp-main .sub{color:var(--muted);margin:6px 0 20px}
 .pp-main p{margin:0 0 14px;max-width:62ch}
 .plate{background:var(--ink);color:var(--bg);padding:clamp(24px,4vw,36px);font-family:var(--f-mono);font-size:.82rem;min-width:0}
@@ -288,13 +328,31 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     </div>
   </section>
 
-  <section class="block" id="uas">
+  <section class="block dark-band" id="uas">
     <div class="wrap">
       <div class="sec-head">
         <div><div class="eyebrow">UAS Development</div><h2>CATS Micro-1</h2></div>
         <p>A modular, additively manufactured micro-UAS that CATS is developing to prove a fast, low-cost path from design to flight hardware.</p>
       </div>
-      <div class="pp">
+      <div class="pp uas-pp">
+        <div class="drone-cell"><svg class="drone" viewBox="-6 -6 212 246" role="img" aria-label="Top-view line drawing of the CATS Micro-1 ducted quadcopter">
+            <path d="M58 58L142 142M142 58L58 142" stroke="rgba(140,190,255,.55)" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="55" cy="55" r="36" fill="rgba(140,190,255,.06)" stroke="#8cbeff" stroke-width="2.5"/><circle cx="55" cy="55" r="31" fill="none" stroke="rgba(140,190,255,.35)" stroke-width="1"/>
+            <g class="prop"><circle cx="55" cy="55" r="29" fill="rgba(166,214,90,.06)"/><path d="M27 55H83M55 27V83" stroke="#a6d65a" stroke-width="3.2" stroke-linecap="round" opacity=".85"/></g>
+            <circle cx="55" cy="55" r="6" fill="#0a1f3f" stroke="#a6d65a" stroke-width="2"/><circle cx="145" cy="55" r="36" fill="rgba(140,190,255,.06)" stroke="#8cbeff" stroke-width="2.5"/><circle cx="145" cy="55" r="31" fill="none" stroke="rgba(140,190,255,.35)" stroke-width="1"/>
+            <g class="prop ccw"><circle cx="145" cy="55" r="29" fill="rgba(166,214,90,.06)"/><path d="M117 55H173M145 27V83" stroke="#a6d65a" stroke-width="3.2" stroke-linecap="round" opacity=".85"/></g>
+            <circle cx="145" cy="55" r="6" fill="#0a1f3f" stroke="#a6d65a" stroke-width="2"/><circle cx="55" cy="145" r="36" fill="rgba(140,190,255,.06)" stroke="#8cbeff" stroke-width="2.5"/><circle cx="55" cy="145" r="31" fill="none" stroke="rgba(140,190,255,.35)" stroke-width="1"/>
+            <g class="prop ccw"><circle cx="55" cy="145" r="29" fill="rgba(166,214,90,.06)"/><path d="M27 145H83M55 117V173" stroke="#a6d65a" stroke-width="3.2" stroke-linecap="round" opacity=".85"/></g>
+            <circle cx="55" cy="145" r="6" fill="#0a1f3f" stroke="#a6d65a" stroke-width="2"/><circle cx="145" cy="145" r="36" fill="rgba(140,190,255,.06)" stroke="#8cbeff" stroke-width="2.5"/><circle cx="145" cy="145" r="31" fill="none" stroke="rgba(140,190,255,.35)" stroke-width="1"/>
+            <g class="prop"><circle cx="145" cy="145" r="29" fill="rgba(166,214,90,.06)"/><path d="M117 145H173M145 117V173" stroke="#a6d65a" stroke-width="3.2" stroke-linecap="round" opacity=".85"/></g>
+            <circle cx="145" cy="145" r="6" fill="#0a1f3f" stroke="#a6d65a" stroke-width="2"/>
+            <rect x="77" y="72" width="46" height="56" rx="7" fill="#0d2a52" stroke="#8cbeff" stroke-width="2"/>
+            <rect x="88" y="66" width="24" height="68" rx="4" fill="rgba(166,214,90,.18)" stroke="#a6d65a" stroke-width="1.5"/>
+            <rect x="92" y="36" width="16" height="14" rx="3" fill="#0d2a52" stroke="#a6d65a" stroke-width="1.5"/><circle cx="100" cy="43" r="3.5" fill="#a6d65a"/>
+            <path d="M100 134v26" stroke="#8cbeff" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <g stroke="#93a9c6" stroke-width="1"><path d="M19 205h162"/><path d="M19 198v14M181 198v14"/><path d="M19 205l7-3v6zM181 205l-7-3v6z" fill="#93a9c6"/></g>
+            <text x="100" y="228" text-anchor="middle" fill="#93a9c6" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">99 mm FOOTPRINT</text>
+          </svg></div>
         <div class="pp-main">
           <h3>Repairable by design</h3>
           <div class="sub">Ducted quadcopter demonstrator · in prototype development</div>
@@ -432,7 +490,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   function draw(t){var w=c.clientWidth,h=c.clientHeight;x.clearRect(0,0,w,h);
     for(var i=0;i<stars.length;i++){var s=stars[i],a=still?.7:.45+.45*Math.sin(t/1000*s[4]+s[3]);
       x.globalAlpha=a;x.fillStyle='#ffffff';x.beginPath();x.arc(s[0]*w,s[1]*h,s[2],0,6.283);x.fill();}
-    if(!still) requestAnimationFrame(draw);}
+    if(!still){var ph=(t%5200)/1400; if(ph<1){var sx=w*(.15+.5*((Math.floor(t/5200)*0.37)%1)),sy=h*.12,len=140,px=sx+ph*w*.35,py=sy+ph*h*.22;var g=x.createLinearGradient(px,py,px-len,py-len*.6);g.addColorStop(0,'rgba(255,255,255,'+(1-ph)+')');g.addColorStop(1,'rgba(255,255,255,0)');x.globalAlpha=1;x.strokeStyle=g;x.lineWidth=1.6;x.beginPath();x.moveTo(px,py);x.lineTo(px-len,py-len*.6);x.stroke();}
+      requestAnimationFrame(draw);}}
   size();window.addEventListener('resize',size);
   if(still) draw(0); else requestAnimationFrame(draw);
 })();
